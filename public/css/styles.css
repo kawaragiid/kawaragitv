@@ -1,0 +1,53 @@
+/* public/css/styles.css */
+body {
+    background-color: #1a1a1a; /* Mengubah warna latar belakang menjadi gelap */
+    font-family: Arial, sans-serif; /* Mengatur jenis font */
+    margin: 0; /* Menghapus margin default */
+    padding: 0; /* Menghapus padding default */
+    display: flex;
+    justify-content: center; /* Posisikan player di tengah halaman */
+    color: white; /* kasih warna teks putih */
+}
+
+.navbar {
+    background-color: #333; /* Warna latar belakang navbar */
+    color: white; /* Warna teks pada navbar */
+    padding: 10px; /* Padding pada navbar */
+    position: fixed; /* Mengatur posisi navbar */
+    top: 0; /* Menempatkan navbar di bagian atas */
+    width: 100%; /* Lebar navbar 100% dari layar */
+    z-index: 1000; /* Menempatkan navbar di atas konten */
+    text-align: center; /* Posisikan teks ketengah */
+}
+
+.logo {
+    position: absolute;
+    top: 25px;
+    right: 80px;
+    width: 80px; /* Sesuaikan ukuran logo sesuai kebutuhan */
+    height: auto;
+    z-index: 9999; /* Pastikan logo tampil di atas video */
+}
+
+.videoPlayer .logo {
+    position: fixed; /* Tetap berada di posisi yang sama saat layar penuh aktif */
+}
+
+.judul {
+    margin-top: 150px; /* Posisikan kebawah sedikit */
+    text-align: left;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.videoPlayer {
+
+    display: flex;
+    margin-top: 100px; /* Posisikan kebawah sedikit */
+
+    justify-content: center;
+    background-color: #333; /* Mengubah warna latar belakang control bar */
+
+    padding: 5empx; /* Menambah padding pada control bar */
+    color: white; /* Mengubah warna teks pada control bar */
+}
