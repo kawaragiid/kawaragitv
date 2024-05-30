@@ -4,6 +4,8 @@ const path = require('path');
 const m3u8url = require('./m3u8url');
 const axios = require('axios');
 require('http-proxy-middleware');
+const HttpsProxyAgent = require('https-proxy-agent');
+
 
 const app = express();
 const port = 3000;
@@ -16,14 +18,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Tambahkan rute untuk favicon.ico
 app.get('/favicon.ico', (req, res) => res.status(204));
 // Middleware untuk proxy request
-// Middleware untuk proxy request
 app.get('/proxy', async (req, res) => {
     try {
         const url = req.query.url;
+        const agent = new HttpsProxyAgent('https://your-proxy-url'); // URL Proxy HTTPS Anda
         const response = await axios({
             method: 'get',
             url: url,
-            responseType: 'stream'
+            responseType: 'stream',
+            httpsAgent: agent
         });
         response.data.pipe(res);
     } catch (error) {
