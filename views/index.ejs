@@ -1,63 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>KawaragiTV</title>
-    <link href="https://vjs.zencdn.net/7.14.3/video-js.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/styles.css">
-</head>
-<body>
-    <nav class="navbar">
-        KAWARAGIFANS
-    </nav>
+    <link href="https://vjs.zencdn.net/7.14.3/video-js.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <nav class="navbar">KAWARAGIFANS</nav>
     <div class="container mt-5 mb-5">
-        <h1 class="judul" style="margin-top: 70px;">KawaragiTV</h1>
-        <div class="row justify-content-center mt-4">
-            <div class="videoPlayer">
-                <div class="embed-responsive embed-responsive-16by9">
-                    <video id="videoPlayer" class="video-js vjs-default-skin" controls preload="auto"></video>
-                    <img src="/images/logo.png" alt="Logo" class="logo">
-                </div>
-
-
-            </div>
-            <div class="col-md-4">
-                <h3>Playlist:</h3>
-                <ul>
-                    <% playlist.forEach((video, index) => { %>
-                        <li><a href="#" onclick="changeVideo('<%= video %>')">Channel <%= index + 1 %></a></li>
-                    <% }); %>
-                </ul>
-            </div>
+      <h1 class="judul" style="margin-top: 70px">KawaragiTV</h1>
+      <div class="row justify-content-center mt-4">
+        <div class="videoPlayer">
+          <div class="embed-responsive embed-responsive-16by9">
+            <video id="videoPlayer" class="video-js vjs-default-skin" controls preload="auto"></video>
+            <img src="/images/logo.png" alt="Logo" class="logo" />
+          </div>
         </div>
+        <div class="col-md-4">
+          <h3>Playlist:</h3>
+          <ul>
+            <% playlist.forEach((video, index) => { %>
+            <li><a href="#" onclick="changeVideo('<%= video %>')">Channel <%= index + 1 %></a></li>
+            <% }); %>
+          </ul>
+        </div>
+      </div>
     </div>
     <script src="https://vjs.zencdn.net/7.14.3/video.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script>
-        const video = document.getElementById('videoPlayer');
-        const player = videojs(video);
+      const video = document.getElementById("videoPlayer");
+      const player = videojs(video);
 
-        function changeVideo(url) {
-            if (Hls.isSupported()) {
-                const hls = new Hls();
-                hls.loadSource(url);
-                hls.attachMedia(video);
-                hls.on(Hls.Events.MANIFEST_PARSED, function() {
-                    video.play();
-                });
-            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                video.src = url;
-                video.addEventListener('loadedmetadata', function() {
-                    video.play();
-                });
-            } else {
-                console.error('HLS is not supported in this browser.');
-            }
+      function changeVideo(url) {
+        const proxyUrl = `/proxy?url=${encodeURIComponent(url)}`;
+        if (Hls.isSupported()) {
+          const hls = new Hls();
+          hls.loadSource(proxyUrl);
+          hls.attachMedia(video);
+          hls.on(Hls.Events.MANIFEST_PARSED, function () {
+            video.play();
+          });
+        } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+          video.src = proxyUrl;
+          video.addEventListener("loadedmetadata", function () {
+            video.play();
+          });
+        } else {
+          console.error("HLS is not supported in this browser.");
         }
+      }
 
-        // Initialize with the first video in the playlist
-        changeVideo('<%= playlist[0] %>');
+      // Initialize with the first video in the playlist
+      changeVideo("<%= playlist[0] %>");
     </script>
-</body>
+  </body>
 </html>
