@@ -33,24 +33,23 @@
     <script>
       const video = document.getElementById("videoPlayer");
       const player = videojs(video);
-
       function changeVideo(url) {
-        const proxyUrl = `/proxy?url=${encodeURIComponent(url)}`;
         if (Hls.isSupported()) {
           const hls = new Hls();
-          hls.loadSource(proxyUrl);
+          hls.loadSource(url);
           hls.attachMedia(video);
           hls.on(Hls.Events.MANIFEST_PARSED, function () {
             video.play();
           });
         } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-          video.src = proxyUrl;
+          video.src = url;
           video.addEventListener("loadedmetadata", function () {
             video.play();
           });
         } else {
           console.error("HLS is not supported in this browser.");
         }
+        video.play(); // Menambahkan perintah untuk autoplay setelah mengganti video
       }
 
       // Initialize with the first video in the playlist
@@ -58,3 +57,5 @@
     </script>
   </body>
 </html>
+
+
